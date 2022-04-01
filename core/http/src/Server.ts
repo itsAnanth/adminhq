@@ -26,9 +26,10 @@ class Server {
         
         for (let i = 0; i < methodsPath.length; i++) {
             const method: RESTTypes = methodsPath[i];
-            const routesPath = fs.readdirSync(`./methods/${method}`);
+            let routesPath = fs.readdirSync(`./methods/${method}`);
             for (let j = 0; j < routesPath.length; j++) {
-                const _path = `${this.path.relative}/${method}/${routesPath[j]}`;
+                let _filename = routesPath[j].slice(0, routesPath[j].split('.').lastIndexOf('.'));
+                const _path = `${this.path.relative}/${method}/${_filename}`;
                 const route: IEndpoint = (await import(`${_path}`)).default;
 
                 if (!(route instanceof Endpoint)) {
