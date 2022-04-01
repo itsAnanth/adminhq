@@ -1,6 +1,6 @@
 class Logger {
     static log(...message: string[]) {
-        console.log('[adminhq]', message);
+        console.log('[adminhq]', ...message);
     }
 }
 
