@@ -19,6 +19,10 @@ class Server {
 
     async init() {
         const methodsPath: RESTTypes[] = (fs.readdirSync(this.methodsPath).map(x => x.toLowerCase()).filter(x => ['get', 'post', 'delete', 'update'].includes(x)) as RESTTypes[]);
+        
+        if (methodsPath.length === 0)
+            return Logger.log('[server]', `${this.methodsPath} is empty. skipping route register`);
+        
         for (let i = 0; i < methodsPath.length; i++) {
             const method: RESTTypes = methodsPath[i];
             const routesPath = fs.readdirSync(`./methods/${method}`);
