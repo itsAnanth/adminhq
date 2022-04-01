@@ -1,7 +1,8 @@
 import fs from 'fs';
 import type { Application } from 'express';
-import type { serverPayload, Server as IServer, RESTTypes, Endpoint } from '../types/Server';
+import type { serverPayload, Server as IServer, RESTTypes, Endpoint as IEndpoint } from '../types/Server';
 import Logger from '../../../modules/Logger';
+import Endpoint from './Endpoint';
 
 interface Server extends IServer { };
 
@@ -27,7 +28,12 @@ class Server {
             const method: RESTTypes = methodsPath[i];
             const routesPath = fs.readdirSync(`./methods/${method}`);
             for (let j = 0; j < routesPath.length; j++) {
-                const route: Endpoint = (await import(`../methods/${method}/${routesPath[j]}`)).default;
+                const _path = `../methods/${method}/${routesPath[j]}`;
+                const route: IEndpoint = (await import(`${_path}`)).default;
+
+                if (!(route instanceof Endpoint)) {
+                    Logger.log('[server]', `at ${_path} expected type Enpoint got ${typeof route}`);
+                }
                 !this.methods.has(method) && (this.methods.set(method, []));
                 (this.methods.get(method).push(route));
                 Logger.log('[server]', `Registered [${method}]`, `${route}`)
