@@ -1,6 +1,7 @@
 import fs from 'fs';
 import type { Application } from 'express';
 import type { serverPayload, Server as IServer, RESTTypes, Endpoint } from '../types/Server';
+import Logger from '../../../modules/Logger';
 
 interface Server extends IServer { };
 
@@ -25,6 +26,7 @@ class Server {
                 const route: Endpoint = (await import(`../methods/${method}/${routesPath[j]}`)).default;
                 !this.methods.has(method) && (this.methods.set(method, []));
                 (this.methods.get(method).push(route));
+                Logger.log('[server]', `Registered [${method}]`, `${route}`)
             }
         }
     }
