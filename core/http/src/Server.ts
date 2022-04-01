@@ -8,9 +8,9 @@ interface Server extends IServer { };
 
 class Server {
     constructor(server: Application, {
-        PORT, methodsPath, autoHandle
+        PORT, path, autoHandle
     }: serverPayload) {
-        this.methodsPath = methodsPath;
+        this.path = path;
         this.server = server;
         this.methods = new Map();
         this.PORT = PORT || 3000;
@@ -19,16 +19,16 @@ class Server {
     }
 
     async init() {
-        const methodsPath: RESTTypes[] = (fs.readdirSync(this.methodsPath).map(x => x.toLowerCase()).filter(x => ['get', 'post', 'delete', 'update'].includes(x)) as RESTTypes[]);
+        const methodsPath: RESTTypes[] = (fs.readdirSync(this.path.absolute).map(x => x.toLowerCase()).filter(x => ['get', 'post', 'delete', 'update'].includes(x)) as RESTTypes[]);
         
         if (methodsPath.length === 0)
-            return Logger.log('[server]', `${this.methodsPath} is empty. skipping route register`);
+            return Logger.log('[server]', `${this.path.absolute} is empty. skipping route register`);
         
         for (let i = 0; i < methodsPath.length; i++) {
             const method: RESTTypes = methodsPath[i];
             const routesPath = fs.readdirSync(`./methods/${method}`);
             for (let j = 0; j < routesPath.length; j++) {
-                const _path = `../methods/${method}/${routesPath[j]}`;
+                const _path = `${this.path.relative}/${method}/${routesPath[j]}`;
                 const route: IEndpoint = (await import(`${_path}`)).default;
 
                 if (!(route instanceof Endpoint)) {
