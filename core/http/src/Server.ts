@@ -28,7 +28,7 @@ class Server {
             const method: RESTTypes = methodsPath[i];
             let routesPath = fs.readdirSync(`./methods/${method}`);
             for (let j = 0; j < routesPath.length; j++) {
-                let _filename = routesPath[j].slice(0, routesPath[j].split('.').lastIndexOf('.'));
+                let _filename = routesPath[j].slice(0, routesPath[j].lastIndexOf('.'));
                 const _path = `${this.path.relative}/${method}/${_filename}`;
                 const route: IEndpoint = (await import(`${_path}`)).default;
 
