@@ -3,3 +3,4 @@
 **/package-lock.*
 **/pnpm-lock.*
 **/*.log
+**/dist/
