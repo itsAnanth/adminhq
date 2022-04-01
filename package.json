@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/itsAnanth/adminhq/issues"
   },
-  "homepage": "https://github.com/itsAnanth/adminhq#readme"
+  "homepage": "https://github.com/itsAnanth/adminhq#readme",
+  "dependencies": {
+    "@types/node": "*",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.3"
+  }
 }
