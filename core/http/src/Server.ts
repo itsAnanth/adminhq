@@ -33,6 +33,7 @@ class Server {
 
                 if (!(route instanceof Endpoint)) {
                     Logger.log('[server]', `at ${_path} expected type Enpoint got ${typeof route}`);
+                    continue;
                 }
                 !this.methods.has(method) && (this.methods.set(method, []));
                 (this.methods.get(method).push(route));
