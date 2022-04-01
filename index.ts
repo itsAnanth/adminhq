@@ -1,4 +1,4 @@
-import http from "./packages/core";
+import http from "./core/http";
 
 
 export default { http }
