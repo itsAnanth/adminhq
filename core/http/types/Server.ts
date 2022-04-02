@@ -3,7 +3,7 @@ import type { Application, RequestHandler } from 'express';
 type serverPayload = {
     PORT: number;
     autoHandle: boolean;
-    path: { absolute: string, relative: string };
+    methods: Endpoint[];
 }
 
 type RESTTypes = 'get'|'post'|'delete'|'put';
@@ -11,14 +11,14 @@ type RESTTypes = 'get'|'post'|'delete'|'put';
 interface Endpoint {
     path: string;
     callback: RequestHandler;
+    type: RESTTypes;
 }
 
 interface Server {
     server: Application;
     autoHandle: boolean;
     PORT: number;
-    path: { absolute: string, relative: string };
-    methods: Map<RESTTypes, Endpoint[]>
+    methods: Endpoint[];
 }
 
 type EndpointPayload = Endpoint;
