@@ -20,7 +20,10 @@
         "target": "ESNext",
 
         "outDir": "dist",
-        "sourceMap": false
+        "sourceMap": false,
+        "declaration": true,
+        "declarationMap": true,
+        "allowJs": true
     },
     "exclude": ["**/dist/"],
 }
