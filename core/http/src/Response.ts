@@ -5,11 +5,11 @@ abstract class IResponse {
 }
 
 class Response extends IResponse {
-    static error({ message, code }: { message: string, code?: number }) {
+    static error({ message, code }: { message: string | object, code?: number }) {
         return JSON.stringify({ success: false, message: message, code: code });
     }
 
-    static success({ message, code }: { message: string, code?: number }) {
+    static success({ message, code }: { message: string | object, code?: number }) {
         return JSON.stringify({ success: true, message: message, code: code });
     }
 }
