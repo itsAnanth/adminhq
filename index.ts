@@ -1,4 +1,5 @@
 import http from "./core/http";
+import Message from "./core/ws";
 
-export default { http };
-export { http };
+export default { http, Message };
+export { http, Message };
